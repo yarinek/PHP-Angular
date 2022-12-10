@@ -5,13 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class PostsController extends Controller
 {
     public function getAll() 
     {
-        return Posts::all();
+        $posts = Posts::all();
+        foreach($posts as $post) {
+            $destinationPath = env('APP_URL') . Storage::url('public/images/posts/'. $post->userId .'/'. $post->photo);
+            $post -> photo = $destinationPath;
+        }
+        return $posts;
     }
 
     public function create(Request $request)
@@ -26,7 +32,8 @@ class PostsController extends Controller
             $file = $request->file('photo');
             $extension = $file->getClientOriginalExtension();
             $fileName = time().'.'.$extension;
-            $file->move('posts/'.$user->id, $fileName);
+            $destinationPath = 'public/images/posts/'. $user->id;
+            Storage::putFileAs($destinationPath, $file, $fileName);
             $post -> photo = $fileName;
         }
         $post -> save();
@@ -39,6 +46,11 @@ class PostsController extends Controller
     {
         if(Posts::where('id', $id)->exists()){
             $post = Posts::find($id);
+            $user = Auth::user();
+            $destinationPath = 'public/images/posts/'.$user->id.'/'.$post->photo;
+            if (Storage::exists($destinationPath)) {
+                Storage::delete($destinationPath);
+            }
             $post -> delete();
 
             return response([
