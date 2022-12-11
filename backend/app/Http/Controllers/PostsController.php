@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Posts;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -15,7 +16,12 @@ class PostsController extends Controller
         $posts = Posts::all();
         foreach($posts as $post) {
             $destinationPath = env('APP_URL') . Storage::url('public/images/posts/'. $post->userId .'/'. $post->photo);
-            $post -> photo = $destinationPath;
+            if(Storage::exists($destinationPath)){
+                $post -> photo = $destinationPath;
+            } else {
+                $post -> photo = null;
+            }
+            $post -> author = User::find($post->userId)->name;
         }
         return $posts;
     }

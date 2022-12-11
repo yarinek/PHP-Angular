@@ -1,0 +1,31 @@
+<div class="post">
+  <div class="post__header">
+    <h3>{{ postDetails?.author }}</h3>
+  </div>
+
+  <img
+    class="post__image"
+    [src]="postDetails?.photo ?? 'assets/images/photoPlaceholder.png'"
+    alt=""
+  />
+
+  <h4 class="post__text">
+    <strong>{{ postDetails?.author }}:</strong> {{ postDetails?.title }}
+  </h4>
+
+  <div class="post__comments">
+    <!-- {comments.map((comment) => (
+    <p><b>{comment.username}</b> {comment.comment}</p>
+    ))} -->
+  </div>
+
+  <div class="post__commentBox">
+    <input
+      mat-input
+      class="post__input"
+      type="text"
+      placeholder="Add a comment..."
+    />
+    <button mat-button class="post__button" (click)="(null)">Post</button>
+  </div>
+</div>

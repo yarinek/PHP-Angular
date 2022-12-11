@@ -1,0 +1,16 @@
+<div className="imageupload">
+  <mat-progress-bar
+    className="imageupload__progress"
+    mode="determinate"
+    value="40"
+  ></mat-progress-bar>
+  <form [formGroup]="form">
+    <input
+      matInput
+      formControlName="title"
+      type="text"
+      placeholder="Enter a caption..."
+    />
+    <input matInput formControlName="photo" type="file" />
+  </form>
+</div>
