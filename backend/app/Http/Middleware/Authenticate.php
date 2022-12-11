@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Symfony\Component\HttpFoundation\Response;
 
 class Authenticate extends Middleware
 {
@@ -24,6 +25,10 @@ class Authenticate extends Middleware
     {
         if($jwt = $request -> cookie('jwt')) {
             $request -> headers -> set('Authorization', 'Bearer ' . $jwt);
+        } else {
+            return response([
+                'error.auth.user.notLoggedIn',
+            ], Response::HTTP_UNAUTHORIZED);
         };
 
         $this->authenticate($request, $guards);

@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -9,11 +9,18 @@ import { PostComponent } from './components/post/post.component';
 import { PostService } from './components/post/post.service';
 import { UploadInputComponent } from './components/post/upload-input/upload-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
+import { Interceptor } from './core/interceptor';
 
 @NgModule({
-  declarations: [AppComponent, PostComponent, UploadInputComponent, LoginComponent, RegisterComponent],
+  declarations: [
+    AppComponent,
+    PostComponent,
+    UploadInputComponent,
+    LoginComponent,
+    RegisterComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -21,7 +28,10 @@ import { RegisterComponent } from './components/register/register.component';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [PostService],
+  providers: [
+    PostService,
+    { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

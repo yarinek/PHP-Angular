@@ -27,9 +27,7 @@ export class LoginComponent implements OnInit {
       .login(this.form.value)
       .pipe(
         tap((data) => {
-          const jwt = data.headers;
-          console.log(jwt);
-          this.close();
+          localStorage.setItem('token', data.token);
         }),
         catchError((err) => {
           throw err;

@@ -3,8 +3,8 @@ import { PostService } from './components/post/post.service';
 import { tap } from 'rxjs';
 import { IPost } from './components/post/post.model';
 import { MatDialog } from '@angular/material/dialog';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/auth/login/login.component';
+import { RegisterComponent } from './components/auth/register/register.component';
 
 @Component({
   selector: 'app-root',

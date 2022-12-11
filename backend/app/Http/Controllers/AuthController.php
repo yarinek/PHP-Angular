@@ -42,6 +42,7 @@ class AuthController extends Controller
 
         return response([
             'message' => 'notifications.auth.user.loginSuccess',
+            'token' => $token
         ])->withCookie($cookie);
     }
 
