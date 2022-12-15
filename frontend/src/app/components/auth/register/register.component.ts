@@ -24,10 +24,7 @@ export class RegisterComponent implements OnInit {
     this.service
       .register(this.form.value)
       .pipe(
-        tap((data) => {
-          this.close();
-          console.log(data);
-        }),
+        tap(() => this.close()),
         catchError((err) => {
           throw err;
         })

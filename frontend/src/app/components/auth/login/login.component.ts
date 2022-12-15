@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
       .pipe(
         tap((data) => {
           localStorage.setItem('token', data.token);
+          this.dialogRef.close(data);
         }),
         catchError((err) => {
           throw err;

@@ -8,6 +8,13 @@
     />
 
     <div class="app__loginContainer">
+      <button mat-icon-button (click)="select.open()">
+        <mat-icon>language</mat-icon>
+        <mat-select #select class="langSelect" (selectionChange)="changeLang($event)">
+          <mat-option value="pl">PL</mat-option>
+          <mat-option value="en">EN</mat-option>
+        </mat-select>
+      </button>
       <button mat-button (click)="openLoginDialog()">Sign In</button>
       <button mat-button (click)="openRegisterDialog()">Sign Up</button>
     </div>

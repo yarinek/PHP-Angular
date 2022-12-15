@@ -6,6 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -15,6 +17,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     MatToolbarModule,
     MatProgressBarModule,
+    MatSelectModule,
+    MatIconModule,
   ],
   exports: [
     MatButtonModule,
@@ -24,6 +28,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatToolbarModule,
     MatProgressBarModule,
     MatDialogModule,
+    MatSelectModule,
+    MatIconModule,
   ],
 })
 export class MaterialModule {}
