@@ -16,4 +16,8 @@ export class PostService {
   uploadPost(body: any): Observable<any> {
     return this.http.post('api/posts', body);
   }
+
+  addLike(id: number): Observable<any> {
+    return this.http.put(`api/posts/${id}/like`, {});
+  }
 }

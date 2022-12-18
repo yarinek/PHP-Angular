@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from '../post.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { catchError, tap } from 'rxjs';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-upload-input',
@@ -13,8 +14,10 @@ export class UploadInputComponent implements OnInit {
     title: new FormControl('', Validators.required),
     photo: new FormControl('', Validators.required),
   });
-
-  constructor(private service: PostService) {}
+  constructor(
+    private service: PostService,
+    public dialogRef: MatDialogRef<UploadInputComponent>
+  ) {}
 
   ngOnInit(): void {}
 
@@ -27,11 +30,19 @@ export class UploadInputComponent implements OnInit {
     this.service
       .uploadPost(formData)
       .pipe(
-        tap((response) => {}),
+        tap((response) => {this.close()}),
         catchError((err) => {
           throw err;
         })
       )
       .subscribe();
+  }
+
+  patchPhoto(event: any) {
+    this.form.patchValue({photo: event.target.files[0]});
+  }
+
+  close(): void {
+    this.dialogRef.close();
   }
 }

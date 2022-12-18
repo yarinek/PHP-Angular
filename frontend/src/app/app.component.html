@@ -15,8 +15,14 @@
           <mat-option value="en">EN</mat-option>
         </mat-select>
       </button>
-      <button mat-button (click)="openLoginDialog()">Sign In</button>
-      <button mat-button (click)="openRegisterDialog()">Sign Up</button>
+      <ng-container *ngIf="!isAuth()">
+        <button mat-button (click)="openLoginDialog()">{{'header.login' | translate}}</button>
+        <button mat-button (click)="openRegisterDialog()">{{'header.register' | translate}}</button>
+      </ng-container>
+      <ng-container *ngIf="isAuth()">
+        <button mat-button (click)="openPostDialog()">{{'header.addPost' | translate}}</button>
+        <button mat-button (click)="logout()">{{'header.logout' | translate}}</button>
+      </ng-container>
     </div>
   </div>
 

@@ -25,4 +25,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('posts', [PostsController::class, 'create']);
     Route::delete('posts/{id}', [PostsController::class, 'delete']);
+    Route::put('posts/{id}/like', [PostsController::class, 'addLike']);
 });

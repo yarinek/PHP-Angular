@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { catchError, tap } from 'rxjs';
-import { RegisterService } from './register.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
     password: new FormControl('', Validators.required),
   });
 
-  constructor(private service: RegisterService, public dialogRef: MatDialogRef<RegisterComponent>) {}
+  constructor(private service: AuthService, public dialogRef: MatDialogRef<RegisterComponent>) {}
 
   ngOnInit(): void {}
 

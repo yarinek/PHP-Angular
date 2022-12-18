@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { catchError, tap } from 'rxjs';
-import { LoginService } from './login.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(
-    private service: LoginService,
+    private service: AuthService,
     public dialogRef: MatDialogRef<LoginComponent>
   ) {}
 

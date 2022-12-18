@@ -13,15 +13,17 @@ class PostsController extends Controller
 {
     public function getAll() 
     {
-        $posts = Posts::all();
+        $posts = Posts::orderBy('id', 'desc')->get();
         foreach($posts as $post) {
-            $destinationPath = env('APP_URL') . Storage::url('public/images/posts/'. $post->userId .'/'. $post->photo);
-            if(Storage::exists($destinationPath)){
+            $pathToFile = 'public/images/posts/'. $post->userId .'/'. $post->photo;
+            $destinationPath = env('APP_URL') . Storage::url($pathToFile);
+            if(Storage::exists($pathToFile)){
                 $post -> photo = $destinationPath;
             } else {
                 $post -> photo = null;
             }
             $post -> author = User::find($post->userId)->name;
+            $post -> likes = $post -> likesNumber;
         }
         return $posts;
     }
@@ -67,5 +69,18 @@ class PostsController extends Controller
         return response([
             'message'=> "error.posts.recordNotExists"
         ], Response::HTTP_NO_CONTENT);
+    }
+
+    public function addLike($id) {
+        if(Posts::where('id', $id)->exists()) {
+            $post = Posts::find($id);
+            $post -> likesNumber = $post -> likesNumber + 1;
+            $post -> save();
+            return response($post->likesNumber, Response::HTTP_OK);
+        };
+
+        return response([
+            'message' => "error.posts.recordNotExists"
+        ], Response::HTTP_BAD_REQUEST);
     }
 }

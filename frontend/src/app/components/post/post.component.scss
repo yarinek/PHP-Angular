@@ -12,15 +12,28 @@
   border-bottom: 1px solid lightgray;
 }
 
+.post__icons {
+  font-weight: normal;
+  padding-left: 10px;
+  border-bottom: 1px solid gray;
+
+  &--icon {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
 .post__text {
   font-weight: normal;
-  padding: 20px;
+  padding: 10px;
+  border-bottom: 1px solid gray;
 }
 
 .post__header {
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
 }
 
 .post__avatar {
