@@ -32,14 +32,16 @@ export class AppComponent implements OnInit {
   }
 
   getAllPosts(): void {
-    this.postService
-    .getAllPosts()
-    .pipe(
-      tap((data) => {
-        this.posts = data;
-      })
-    )
-    .subscribe();
+    const request = this.isAuth()
+      ? this.postService.getAllAuthPosts()
+      : this.postService.getAllPosts();
+    request
+      .pipe(
+        tap((data) => {
+          this.posts = data;
+        })
+      )
+      .subscribe();
   }
 
   openLoginDialog(): void {
@@ -47,10 +49,7 @@ export class AppComponent implements OnInit {
 
     dialogRef
       .afterClosed()
-      .pipe(
-        tap((data) => {
-        })
-      )
+      .pipe(tap(() => this.getAllPosts()))
       .subscribe();
   }
 
@@ -61,11 +60,7 @@ export class AppComponent implements OnInit {
 
     dialogRef
       .afterClosed()
-      .pipe(
-        tap((data) => {
-          this.getAllPosts();
-        })
-      )
+      .pipe(tap(() => this.getAllPosts()))
       .subscribe();
   }
 
@@ -74,11 +69,7 @@ export class AppComponent implements OnInit {
 
     dialogRef
       .afterClosed()
-      .pipe(
-        tap(() => {
-          console.log('dialog closed');
-        })
-      )
+      .pipe(tap(() => this.getAllPosts()))
       .subscribe();
   }
 
@@ -92,8 +83,14 @@ export class AppComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logout().pipe(
-      tap(() => localStorage.removeItem('token'))
-    ).subscribe();
+    this.authService
+      .logout()
+      .pipe(
+        tap(() => {
+          localStorage.removeItem('token');
+          this.getAllPosts();
+        })
+      )
+      .subscribe();
   }
 }

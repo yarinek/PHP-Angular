@@ -1,27 +1,32 @@
 {
-    "header": {
-        "login": "Sign in",
-        "register": "Sign up",
-        "logout": "Logout",
-        "addPost": "Add post"
-    },
-    "main": {
-        "posts": {
-            "post": {
-                "add": "Add a new post",
-                "title": "Title",
-                "photo": "Add a photo"
-            },
-            "comment": {
-                "placeholder": "Add a comment...",
-                "post": "Post"
-            }
-        }
-    },
-    "common": {
-        "buttons": {
-            "add": "Add",
-            "close": "Close"
-        }
+  "header": {
+    "login": "Sign in",
+    "register": "Sign up",
+    "logout": "Logout",
+    "addPost": "Add post"
+  },
+  "main": {
+    "posts": {
+      "post": {
+        "add": "Add a new post",
+        "title": "Title",
+        "photo": "Add a photo"
+      },
+      "comment": {
+        "placeholder": "Add a comment...",
+        "post": "Post"
+      }
     }
+  },
+  "common": {
+    "buttons": {
+      "add": "Add",
+      "close": "Close"
+    }
+  },
+  "error": {
+    "auth": {
+      "user.notLoggedIn": "User logged out. Log in and try again"
+    }
+  }
 }

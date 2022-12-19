@@ -8,6 +8,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import {
+  MatSnackBarModule,
+  MAT_SNACK_BAR_DEFAULT_OPTIONS,
+} from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -19,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatProgressBarModule,
     MatSelectModule,
     MatIconModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -30,6 +35,17 @@ import { MatIconModule } from '@angular/material/icon';
     MatDialogModule,
     MatSelectModule,
     MatIconModule,
+    MatSnackBarModule,
+  ],
+  providers: [
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: {
+        duration: 5000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      },
+    },
   ],
 })
 export class MaterialModule {}

@@ -18,4 +18,9 @@ class Posts extends Model
     protected $hidden = [
         'likesNumber',
     ];
+
+    public function likes()
+    {
+        return $this->belongsToMany('App\User', 'likes', 'postId', 'userId');
+    }
 }

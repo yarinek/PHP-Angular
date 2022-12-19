@@ -10,6 +10,10 @@ export class PostService {
   constructor(private http: HttpClient) {}
 
   getAllPosts(): Observable<IPost[]> {
+    return this.http.get<IPost[]>('api/preview');
+  }
+
+  getAllAuthPosts(): Observable<IPost[]> {
     return this.http.get<IPost[]>('api/posts');
   }
 
@@ -19,5 +23,9 @@ export class PostService {
 
   addLike(id: number): Observable<any> {
     return this.http.put(`api/posts/${id}/like`, {});
+  }
+
+  unlike(id: number): Observable<any> {
+    return this.http.put(`api/posts/${id}/unlike`, {});
   }
 }

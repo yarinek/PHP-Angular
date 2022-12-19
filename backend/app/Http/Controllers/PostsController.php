@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Likes;
 use App\Models\Posts;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,6 +25,21 @@ class PostsController extends Controller
             }
             $post -> author = User::find($post->userId)->name;
             $post -> likes = $post -> likesNumber;
+            
+        }
+        return $posts;
+    }
+
+    public function getAllAuth()
+    {
+        $posts = $this->getAll();
+        $userId = Auth::user() -> id;
+        foreach($posts as $post) {
+            if(Likes::where('userId', $userId)->where('postId', $post->id)->exists()){
+                $post -> isLiked = true;
+            } else {
+                $post -> isLiked = false;
+            }
         }
         return $posts;
     }
@@ -73,10 +89,43 @@ class PostsController extends Controller
 
     public function addLike($id) {
         if(Posts::where('id', $id)->exists()) {
-            $post = Posts::find($id);
-            $post -> likesNumber = $post -> likesNumber + 1;
-            $post -> save();
-            return response($post->likesNumber, Response::HTTP_OK);
+            $userId = Auth::user() -> id;
+            if(!Likes::where('userId', $userId)->where('postId', $id)->exists()) {
+                // Increment likes
+                $post = Posts::find($id);
+                $post -> increment('likesNumber');
+                $post -> save();
+
+                // Add like to table
+                $like = new Likes();
+                $like -> userId = $userId;
+                $like -> postId = $id;
+                $like -> save();
+                return response($post->likesNumber, Response::HTTP_OK);
+            }
+            return response(['message'=>"Already liked"], Response::HTTP_BAD_REQUEST);
+        };
+
+        return response([
+            'message' => "error.posts.recordNotExists"
+        ], Response::HTTP_BAD_REQUEST);
+    }
+
+    public function removeLike($id) {
+        if(Posts::where('id', $id)->exists()) {
+            $userId = Auth::user() -> id;
+            if(Likes::where('userId', $userId)->where('postId', $id)->exists()) {
+                // Increment likes
+                $post = Posts::find($id);
+                $post -> decrement('likesNumber');
+                $post -> save();
+
+                // Remove like in table
+                $like = Likes::where('userId', $userId)->where('postId', $id)->first();
+                $like -> delete();
+                return response($post->likesNumber, Response::HTTP_OK);
+            }
+            return response(['message'=>"Not liked"], Response::HTTP_BAD_REQUEST);
         };
 
         return response([

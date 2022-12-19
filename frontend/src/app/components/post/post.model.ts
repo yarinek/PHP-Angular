@@ -5,4 +5,5 @@ export interface IPost {
   photo: string | null;
   likes: number;
   created_at: Date;
+  isLiked: boolean;
 }

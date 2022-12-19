@@ -18,12 +18,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::get('posts', [PostsController::class, 'getAll']);
+Route::get('preview', [PostsController::class, 'getAll']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('posts', [PostsController::class, 'getAllAuth']);
     Route::get('user', [AuthController::class, 'user']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('posts', [PostsController::class, 'create']);
     Route::delete('posts/{id}', [PostsController::class, 'delete']);
     Route::put('posts/{id}/like', [PostsController::class, 'addLike']);
+    Route::put('posts/{id}/unlike', [PostsController::class, 'removeLike']);
 });

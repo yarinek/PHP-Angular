@@ -26,9 +26,7 @@ class Authenticate extends Middleware
         if($jwt = $request -> cookie('jwt')) {
             $request -> headers -> set('Authorization', 'Bearer ' . $jwt);
         } else {
-            return response([
-                'error.auth.user.notLoggedIn',
-            ], Response::HTTP_UNAUTHORIZED);
+            return response(['message'=>"error.auth.user.notLoggedIn"], Response::HTTP_UNAUTHORIZED);
         };
 
         $this->authenticate($request, $guards);

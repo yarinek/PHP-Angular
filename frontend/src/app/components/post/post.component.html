@@ -11,8 +11,13 @@
 
   <div class="post__icons">
     <div class="post__icons--icon">
-      <mat-icon (click)="addLike()">favorite</mat-icon>
-      <span>{{postDetails.likes}}</span>
+      <mat-icon
+        [class.gray-icon]="!postDetails.isLiked"
+        [class.red-icon]="postDetails.isLiked"
+        (click)="handleLike()"
+        >favorite</mat-icon
+      >
+      <span>{{ postDetails.likes }}</span>
     </div>
   </div>
 
@@ -31,8 +36,10 @@
       mat-input
       class="post__input"
       type="text"
-      placeholder="{{'main.posts.comment.placeholder' | translate}}"
+      placeholder="{{ 'main.posts.comment.placeholder' | translate }}"
     />
-    <button mat-button class="post__button" (click)="(null)">{{'main.posts.comment.post' | translate}}</button>
+    <button mat-button class="post__button" (click)="(null)">
+      {{ "main.posts.comment.post" | translate }}
+    </button>
   </div>
 </div>

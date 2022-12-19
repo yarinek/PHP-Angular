@@ -15,12 +15,18 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  addLike(): void {
+  handleLike(): void {
     const { id } = this.postDetails;
-    this.service.addLike(id).pipe(
-      tap((likesNumber)=> {
-        this.postDetails.likes = likesNumber;
-      })
-    ).subscribe();
+    const request = this.postDetails.isLiked
+      ? this.service.unlike(id)
+      : this.service.addLike(id);
+    request
+      .pipe(
+        tap((likesNumber) => {
+          this.postDetails.likes = likesNumber;
+          this.postDetails.isLiked = !this.postDetails.isLiked;
+        })
+      )
+      .subscribe();
   }
 }

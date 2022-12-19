@@ -1,27 +1,32 @@
 {
-    "header": {
-        "login": "Zaloguj się",
-        "register": "Rejestracja",
-        "logout": "Wyloguj się",
-        "addPost": "Dodaj nowe zdjęcie"
-    },
-    "main": {
-        "posts": {
-            "post": {
-                "add": "Dodaj nowy post",
-                "title": "Tytuł",
-                "photo": "Dodaj zdjęcie"
-            },
-            "comment": {
-                "placeholder": "Dodaj komentarz...",
-                "post": "Wyślij"
-            }
-        }
-    },
-    "common": {
-        "buttons": {
-            "add": "Dodaj",
-            "close": "Zamknij"
-        }
+  "header": {
+    "login": "Zaloguj się",
+    "register": "Rejestracja",
+    "logout": "Wyloguj się",
+    "addPost": "Dodaj nowe zdjęcie"
+  },
+  "main": {
+    "posts": {
+      "post": {
+        "add": "Dodaj nowy post",
+        "title": "Tytuł",
+        "photo": "Dodaj zdjęcie"
+      },
+      "comment": {
+        "placeholder": "Dodaj komentarz...",
+        "post": "Wyślij"
+      }
     }
+  },
+  "common": {
+    "buttons": {
+      "add": "Dodaj",
+      "close": "Zamknij"
+    }
+  },
+  "error": {
+    "auth": {
+      "user.notLoggedIn": "Użytkownik wylogowany. Zaloguj się i spróbuj ponownie"
+    }
+  }
 }
