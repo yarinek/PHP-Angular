@@ -12,7 +12,7 @@ import { MaterialModule } from './core/mat-module';
 import { PostComponent } from './components/post/post.component';
 import { PostService } from './components/post/post.service';
 import { UploadInputComponent } from './components/post/upload-input/upload-input.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/auth/login/login.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { Interceptor } from './core/interceptor';
@@ -37,6 +37,7 @@ export function HttpTranslateLoader(http: HttpClient) {
     MaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

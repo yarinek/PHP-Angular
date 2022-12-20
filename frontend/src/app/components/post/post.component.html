@@ -26,9 +26,12 @@
   </div>
 
   <div class="post__comments">
-    <!-- {comments.map((comment) => (
-    <p><b>{comment.username}</b> {comment.comment}</p>
-    ))} -->
+    <p *ngFor="let comment of postDetails.comments" class="post__comments--comment">
+      <span>
+        <b>{{ comment.author }}:</b> {{ comment.comment }}
+      </span>
+      <mat-icon class="post__comments--commentIcon" (click)="deleteComment(comment.id)">close</mat-icon>
+    </p>
   </div>
 
   <div class="post__commentBox">
@@ -36,9 +39,15 @@
       mat-input
       class="post__input"
       type="text"
+      [(ngModel)]="commentValue"
       placeholder="{{ 'main.posts.comment.placeholder' | translate }}"
     />
-    <button mat-button class="post__button" (click)="(null)">
+    <button
+      [disabled]="!commentValue"
+      mat-button
+      class="post__button"
+      (click)="addComment()"
+    >
       {{ "main.posts.comment.post" | translate }}
     </button>
   </div>

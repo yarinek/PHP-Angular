@@ -7,6 +7,7 @@ import { IPost } from './post.model';
   providedIn: 'root',
 })
 export class PostService {
+  url = 'api/posts';
   constructor(private http: HttpClient) {}
 
   getAllPosts(): Observable<IPost[]> {
@@ -14,18 +15,26 @@ export class PostService {
   }
 
   getAllAuthPosts(): Observable<IPost[]> {
-    return this.http.get<IPost[]>('api/posts');
+    return this.http.get<IPost[]>(this.url);
   }
 
   uploadPost(body: any): Observable<any> {
-    return this.http.post('api/posts', body);
+    return this.http.post(this.url, body);
   }
 
   addLike(id: number): Observable<any> {
-    return this.http.put(`api/posts/${id}/like`, {});
+    return this.http.put(`${this.url}/${id}/like`, {});
   }
 
   unlike(id: number): Observable<any> {
-    return this.http.put(`api/posts/${id}/unlike`, {});
+    return this.http.put(`${this.url}/${id}/unlike`, {});
+  }
+
+  addComment(id: number, comment: string): Observable<any> {
+    return this.http.post(`${this.url}/${id}/comment`, { comment });
+  }
+
+  deleteComment(id: number): Observable<any> {
+    return this.http.delete(`api/comments/${id}`);
   }
 }

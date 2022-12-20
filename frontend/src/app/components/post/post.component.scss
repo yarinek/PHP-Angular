@@ -43,7 +43,7 @@
 
   &__commentBox {
     display: flex;
-    margin-top: 10px;
+    margin-top: 5px;
   }
 
   &__input {
@@ -58,9 +58,28 @@
     border: none;
     color: #6082a3;
     border-top: 1px solid lightgray;
+
+    &:disabled {
+      color: gray;
+    }
   }
 
   &__comments {
-    padding: 20px;
+    padding-left: 10px;
+
+    &--comment {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      vertical-align: center;
+
+      &Icon {
+        transform: scale(0.5);
+        &:hover {
+          cursor: pointer;
+          color: red;
+        }
+      }
+    }
   }
 }

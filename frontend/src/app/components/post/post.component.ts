@@ -10,6 +10,7 @@ import { PostService } from './post.service';
 })
 export class PostComponent implements OnInit {
   @Input() postDetails: IPost = {} as IPost;
+  commentValue!: string;
 
   constructor(private service: PostService) {}
 
@@ -25,6 +26,30 @@ export class PostComponent implements OnInit {
         tap((likesNumber) => {
           this.postDetails.likes = likesNumber;
           this.postDetails.isLiked = !this.postDetails.isLiked;
+        })
+      )
+      .subscribe();
+  }
+
+  addComment(): void {
+    const { id } = this.postDetails;
+    this.service
+      .addComment(id, this.commentValue)
+      .pipe(
+        tap((data) => {
+          this.postDetails.comments = data.comments;
+          this.commentValue = '';
+        })
+      )
+      .subscribe();
+  }
+
+  deleteComment(id: number): void {
+    this.service
+      .deleteComment(id)
+      .pipe(
+        tap((data) => {
+          this.postDetails.comments = data.comments;
         })
       )
       .subscribe();

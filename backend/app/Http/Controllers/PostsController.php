@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comments;
 use App\Models\Likes;
 use App\Models\Posts;
 use App\Models\User;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+use App\Http\Controllers\CommentsController;
 
 class PostsController extends Controller
 {
@@ -25,7 +27,7 @@ class PostsController extends Controller
             }
             $post -> author = User::find($post->userId)->name;
             $post -> likes = $post -> likesNumber;
-            
+            $post -> comments = CommentsController::getAllCommentsByPostId($post->id);
         }
         return $posts;
     }
@@ -128,6 +130,24 @@ class PostsController extends Controller
             return response(['message'=>"Not liked"], Response::HTTP_BAD_REQUEST);
         };
 
+        return response([
+            'message' => "error.posts.recordNotExists"
+        ], Response::HTTP_BAD_REQUEST);
+    }
+
+    public function addComment(Request $request, $id) {
+        if(Posts::where('id', $id)->exists()){
+            $userId = Auth::user() -> id;
+            $comment = new Comments();
+            $comment -> userId = $userId;
+            $comment -> postId = $id;
+            $comment -> comment = $request -> comment;
+            $comment -> save();
+            return response([
+                'message' => "Commented succesfully",
+                'comments' => CommentsController::getAllCommentsByPostId($id)
+            ], Response::HTTP_OK);
+        }
         return response([
             'message' => "error.posts.recordNotExists"
         ], Response::HTTP_BAD_REQUEST);

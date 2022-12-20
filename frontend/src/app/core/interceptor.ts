@@ -27,7 +27,7 @@ export class Interceptor implements HttpInterceptor {
           const message = this.translate.instant(event.body.message);
           const action = this.translate.instant('common.buttons.close');
           this.toastMessage.open(message, action, {
-            panelClass: ['mat-toolbar', 'mat-warn'],
+            panelClass: ['mat-toolbar', 'mat-basic'],
           });
         }
       }),
