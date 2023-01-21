@@ -4,7 +4,6 @@
 
 .app {
   background-color: #fafafa;
-  height: 100vh;
 
   &__loginContainer {
     display: flex;
@@ -43,6 +42,17 @@
   padding: 20px;
   display: flex;
   justify-content: center;
+}
+
+.app__loadMore {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  transform: scale(2);
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 ::ng-deep .langSelect div.mat-select-arrow-wrapper {
