@@ -14,9 +14,9 @@ use App\Http\Controllers\CommentsController;
 
 class PostsController extends Controller
 {
-    public function getAll() 
+    public function getAll(Request $request) 
     {
-        $posts = Posts::orderBy('id', 'desc')->get();
+        $posts = Posts::orderBy('created_at', 'desc')->paginate($request->size, ['*'], 'page', $request->page);
         foreach($posts as $post) {
             $pathToFile = 'public/images/posts/'. $post->userId .'/'. $post->photo;
             $destinationPath = env('APP_URL') . Storage::url($pathToFile);
@@ -32,11 +32,17 @@ class PostsController extends Controller
         return $posts;
     }
 
-    public function getAllAuth()
+    public function getAllAuth(Request $request)
     {
-        $posts = $this->getAll();
+        $posts = $this->getAll($request);
         $userId = Auth::user() -> id;
         foreach($posts as $post) {
+            if($post->userId == $userId) {
+                $post -> postOwner = true;
+            } else {
+                $post -> postOwner = false;
+            }
+
             if(Likes::where('userId', $userId)->where('postId', $post->id)->exists()){
                 $post -> isLiked = true;
             } else {
@@ -73,14 +79,19 @@ class PostsController extends Controller
         if(Posts::where('id', $id)->exists()){
             $post = Posts::find($id);
             $user = Auth::user();
-            $destinationPath = 'public/images/posts/'.$user->id.'/'.$post->photo;
-            if (Storage::exists($destinationPath)) {
-                Storage::delete($destinationPath);
+            if($post->userId == $user -> id) {
+                $destinationPath = 'public/images/posts/'.$user->id.'/'.$post->photo;
+                if (Storage::exists($destinationPath)) {
+                    Storage::delete($destinationPath);
+                }
+                $post -> delete();
+    
+                return response([
+                    'message' => "notifications.posts.deleteSuccess"
+                ]);
             }
-            $post -> delete();
-
             return response([
-                'message' => "Post deleted successfully"
+                'message' => "error.posts.deleteNotUsersPost"
             ]);
         }
 
@@ -105,7 +116,7 @@ class PostsController extends Controller
                 $like -> save();
                 return response($post->likesNumber, Response::HTTP_OK);
             }
-            return response(['message'=>"Already liked"], Response::HTTP_BAD_REQUEST);
+            return response(['message'=>"error.posts.alreadyLiked"], Response::HTTP_BAD_REQUEST);
         };
 
         return response([
@@ -127,7 +138,7 @@ class PostsController extends Controller
                 $like -> delete();
                 return response($post->likesNumber, Response::HTTP_OK);
             }
-            return response(['message'=>"Not liked"], Response::HTTP_BAD_REQUEST);
+            return response(['message'=>"error.posts.notLiked"], Response::HTTP_BAD_REQUEST);
         };
 
         return response([

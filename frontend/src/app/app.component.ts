@@ -16,7 +16,9 @@ import { UploadInputComponent } from './components/post/upload-input/upload-inpu
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  posts?: IPost[];
+  posts: IPost[] = [];
+  pagination = {size: 5, page: 1};
+  lastPage!: number;
 
   constructor(
     private postService: PostService,
@@ -31,14 +33,18 @@ export class AppComponent implements OnInit {
     this.getAllPosts();
   }
 
-  getAllPosts(): void {
+  getAllPosts(customPage?: number): void {
+    const {page, size} = this.pagination
+    const cstPage = customPage ?? page;
     const request = this.isAuth()
-      ? this.postService.getAllAuthPosts()
-      : this.postService.getAllPosts();
+      ? this.postService.getAllAuthPosts({page: cstPage, size})
+      : this.postService.getAllPosts({page: cstPage, size});
     request
       .pipe(
-        tap((data) => {
-          this.posts = data;
+        tap(({data, last_page}) => {
+          this.posts.push(...data);
+          this.posts = this.posts.filter((obj, index, self) => self.findIndex(t => t.id === obj.id) === index);
+          this.lastPage = last_page;
         })
       )
       .subscribe();
@@ -49,7 +55,7 @@ export class AppComponent implements OnInit {
 
     dialogRef
       .afterClosed()
-      .pipe(tap(() => this.getAllPosts()))
+      .pipe(tap(() => this.getAllPosts(1)))
       .subscribe();
   }
 
@@ -60,7 +66,7 @@ export class AppComponent implements OnInit {
 
     dialogRef
       .afterClosed()
-      .pipe(tap(() => this.getAllPosts()))
+      .pipe(tap(() => this.getAllPosts(1)))
       .subscribe();
   }
 
@@ -69,7 +75,7 @@ export class AppComponent implements OnInit {
 
     dialogRef
       .afterClosed()
-      .pipe(tap(() => this.getAllPosts()))
+      .pipe(tap(() => this.getAllPosts(1)))
       .subscribe();
   }
 
@@ -92,5 +98,16 @@ export class AppComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+  handleDeletePosts(id:number): void {
+    const index = this.posts.findIndex(item => item.id === id);
+    this.posts = this.posts.filter(item => item.id !== id);
+    this.getAllPosts(Math.ceil(index/this.pagination.size))
+  }
+
+  getNextPage(): void {
+    this.pagination.page += 1;
+    this.getAllPosts()
   }
 }

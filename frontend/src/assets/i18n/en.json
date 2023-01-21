@@ -26,7 +26,30 @@
   },
   "error": {
     "auth": {
-      "user.notLoggedIn": "User logged out. Log in and try again"
+      "user": {
+        "notLoggedIn": "User logged out. Log in and try again",
+        "uniqueEmail": "The user with the given email address is already registered",
+        "invalidCredentials": "Incorrect email or password"
+      }
+    },
+    "posts": {
+        "alreadyLiked": "You already liked this post",
+        "notLiked": "You didn't liked this post yet",
+        "commentIsNotCreatedByUser": "You cannot delete not your comment",
+        "commentNotExists": "Comment doesnt exist",
+        "deleteNotUsersPost": "You cannot delete not your post",
+        "recordNotExists": "Post doesnt exist"
+    }
+  },
+  "notifications": {
+    "auth": {
+        "user": {
+            "loginSuccess": "You successfully logged in",
+            "logoutSuccess": "You successfully logged out"
+        }
+    },
+    "posts": {
+      "deleteSuccess": "Deleted successfully"
     }
   }
 }

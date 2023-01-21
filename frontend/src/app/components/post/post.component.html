@@ -1,13 +1,26 @@
 <div class="post">
   <div class="post__header">
     <h3>{{ postDetails.author }}</h3>
+    <mat-icon *ngIf="postDetails.postOwner" class="post__comments--commentIcon" (click)="deletePost(postDetails.id)">close</mat-icon>
   </div>
 
-  <img
+  <div class="post__imageContainer">
+    <img
+    (dblclick)="handleLike('picture')"
+    [ngClass]="{'post__image--animation': showHeart}"
     class="post__image"
     [src]="postDetails.photo ?? 'assets/images/photoPlaceholder.png'"
     alt=""
   />
+  <mat-icon
+        class="post__image--heart"
+        *ngIf="showHeart"
+        [class.gray-icon]="!postDetails.isLiked"
+        [class.red-icon]="postDetails.isLiked"
+        >favorite
+   </mat-icon>
+  </div>
+  
 
   <div class="post__icons">
     <div class="post__icons--icon">

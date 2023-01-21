@@ -26,7 +26,30 @@
   },
   "error": {
     "auth": {
-      "user.notLoggedIn": "Użytkownik wylogowany. Zaloguj się i spróbuj ponownie"
+      "user": {
+        "notLoggedIn": "Użytkownik wylogowany. Zaloguj się i spróbuj ponownie",
+        "uniqueEmail": "Użytkownik o podanym adresie email jest już zarejestrowany",
+        "invalidCredentials": "Niepoprawny email lub hasło"
+      }
+    },
+    "posts": {
+        "alreadyLiked": "Polubiłeś już ten post",
+        "notLiked": "Jeszcze nie polubiłeś tego postu",
+        "commentIsNotCreatedByUser": "Nie możesz usunąć nie swojego komentarza",
+        "commentNotExists": "Komentarz nie istnieje",
+        "deleteNotUsersPost": "Nie możesz usunąć nie swojego postu",
+        "recordNotExists": "Post nie istnieje"
+    }
+  },
+  "notifications": {
+    "auth": {
+        "user": {
+            "loginSuccess": "Pomyślnie zalogowano",
+            "logoutSuccess": "Pomyślnie wylogowano"
+        }
+    },
+    "posts": {
+      "deleteSuccess": "Pomyślnie usunięto"
     }
   }
 }

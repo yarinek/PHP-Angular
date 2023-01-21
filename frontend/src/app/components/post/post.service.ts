@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IPost } from './post.model';
+import { IPostResponse } from './post.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,16 +10,20 @@ export class PostService {
   url = 'api/posts';
   constructor(private http: HttpClient) {}
 
-  getAllPosts(): Observable<IPost[]> {
-    return this.http.get<IPost[]>('api/preview');
+  getAllPosts(params: any): Observable<IPostResponse> {
+    return this.http.get<IPostResponse>('api/preview', { params });
   }
 
-  getAllAuthPosts(): Observable<IPost[]> {
-    return this.http.get<IPost[]>(this.url);
+  getAllAuthPosts(params: any): Observable<IPostResponse> {
+    return this.http.get<IPostResponse>(this.url, {params});
   }
 
   uploadPost(body: any): Observable<any> {
     return this.http.post(this.url, body);
+  }
+
+  deletePost(id: number): Observable<any> {
+    return this.http.delete(`${this.url}/${id}`)
   }
 
   addLike(id: number): Observable<any> {

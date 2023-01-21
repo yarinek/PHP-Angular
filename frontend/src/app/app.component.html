@@ -29,8 +29,11 @@
   <div class="app__posts">
     <div class="app__postsLeft">
       <ng-container *ngFor="let postDetail of posts">
-        <app-post [postDetails]="postDetail"></app-post>
+        <app-post [postDetails]="postDetail" (deletePosts)="handleDeletePosts($event)"></app-post>
       </ng-container>
     </div>
+  </div>
+  <div *ngIf="pagination.page < lastPage" class="app__loadMore">
+    <mat-icon (click)="getNextPage()">keyboard_arrow_down</mat-icon>
   </div>
 </div>

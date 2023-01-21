@@ -9,6 +9,19 @@
     object-fit: contain;
     border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
+    display: block;
+
+    &Container {
+      position: relative;
+    }
+    &--heart {
+      transform: scale(5);
+      opacity: 0.85;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 1;
+    }
   }
 
   &__icons {
@@ -35,6 +48,7 @@
     display: flex;
     align-items: center;
     padding: 10px;
+    justify-content: space-between;
   }
 
   &__avatar {
@@ -83,3 +97,4 @@
     }
   }
 }
+
