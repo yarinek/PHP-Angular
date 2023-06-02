@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { tap } from 'rxjs';
 import { IPost } from './post.model';
 import { PostService } from './post.service';
@@ -26,7 +26,7 @@ export class PostComponent {
         tap((likesNumber) => {
           this.postDetails.likes = likesNumber;
           this.postDetails.isLiked = !this.postDetails.isLiked;
-        })
+        }),
       )
       .subscribe();
     if(position === 'picture'){

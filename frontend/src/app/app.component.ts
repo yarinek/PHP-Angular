@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatSelectChange } from '@angular/material/select';
 import { AuthService } from './components/auth/auth.service';
 import { UploadInputComponent } from './components/post/upload-input/upload-input.component';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-root',
@@ -43,7 +44,7 @@ export class AppComponent implements OnInit {
       .pipe(
         tap(({data, last_page}) => {
           this.posts.push(...data);
-          this.posts = this.posts.filter((obj, index, self) => self.findIndex(t => t.id === obj.id) === index);
+          this.posts = _.cloneDeep(this.posts.filter((obj, index, self) => self.findIndex(t => t.id === obj.id) === index));
           this.lastPage = last_page;
         })
       )
@@ -55,7 +56,10 @@ export class AppComponent implements OnInit {
 
     dialogRef
       .afterClosed()
-      .pipe(tap(() => this.getAllPosts(1)))
+      .pipe(tap(() => {
+        this.posts = [];
+        this.getAllPosts(1);
+      }))
       .subscribe();
   }
 
@@ -94,7 +98,8 @@ export class AppComponent implements OnInit {
       .pipe(
         tap(() => {
           localStorage.removeItem('token');
-          this.getAllPosts();
+          this.posts = [];
+          this.getAllPosts(1);
         })
       )
       .subscribe();
